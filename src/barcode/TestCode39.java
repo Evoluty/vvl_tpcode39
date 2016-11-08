@@ -6,7 +6,7 @@ public class TestCode39 extends TestCase
 {
 	
 	Code39 c = new Code39();
-	
+	 
 	public void testEncodeCode39() 
 	{
 		assertEquals("failure - strings are not equal", "*BONJOUR*", 		c.encodeCode39("bonjour"));
