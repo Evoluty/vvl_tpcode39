@@ -18,22 +18,26 @@
   <path id="barcode.module.production.classpath">
     <path refid="${module.jdk.classpath.barcode}"/>
     <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="${idea.home}/lib/junit.jar"/>
   </path>
   
   <path id="barcode.runtime.production.module.classpath">
     <pathelement location="${barcode.output.dir}"/>
     <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="${idea.home}/lib/junit.jar"/>
   </path>
   
   <path id="barcode.module.classpath">
     <pathelement location="${barcode.output.dir}"/>
     <path refid="${module.jdk.classpath.barcode}"/>
     <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="${idea.home}/lib/junit.jar"/>
   </path>
   
   <path id="barcode.runtime.module.classpath">
     <pathelement location="${barcode.output.dir}"/>
     <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="${idea.home}/lib/junit.jar"/>
   </path>
   
   
@@ -54,15 +58,15 @@
   
   <target name="compile.module.barcode" depends="compile.module.barcode.production,compile.module.barcode.tests" description="Compile module barcode"/>
   
-  <target name="compile.module.barcode.production" description="Compile module barcode; production classes">
+  <target name="compile.module.barcode.production" depends="register.custom.compilers" description="Compile module barcode; production classes">
     <mkdir dir="${barcode.output.dir}"/>
-    <javac destdir="${barcode.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.barcode}/javac">
+    <javac2 destdir="${barcode.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.barcode}/javac">
       <compilerarg line="${compiler.args.barcode}"/>
       <bootclasspath refid="barcode.module.bootclasspath"/>
       <classpath refid="barcode.module.production.classpath"/>
       <src refid="barcode.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.barcode"/>
-    </javac>
+    </javac2>
     
     <copy todir="${barcode.output.dir}">
       <fileset dir="${module.barcode.basedir}/src">
@@ -72,7 +76,7 @@
     </copy>
   </target>
   
-  <target name="compile.module.barcode.tests" depends="compile.module.barcode.production" description="compile module barcode; test classes" unless="skip.tests"/>
+  <target name="compile.module.barcode.tests" depends="register.custom.compilers,compile.module.barcode.production" description="compile module barcode; test classes" unless="skip.tests"/>
   
   <target name="clean.module.barcode" description="cleanup module">
     <delete dir="${barcode.output.dir}"/>
