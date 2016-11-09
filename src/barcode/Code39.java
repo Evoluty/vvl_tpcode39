@@ -8,9 +8,9 @@ public class Code39
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
 		if ( alphabet.contains((c+"")))
 			return true;
-		if ( Character.isDigit(c) )
+		else if ( Character.isDigit(c) )
 			return true;
-		if ( c == ' ' || c == '-' || c == '$' || c == '%' || c == '.' || c == '/' || c == '+' )
+		else if ( c == ' ' || c == '-' || c == '$' || c == '%' || c == '.' || c == '/' || c == '+' )
 			return true;
 
 		return false;
